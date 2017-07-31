@@ -99,6 +99,12 @@ template<class node_type,class weight_type> class Dijkstra
 };
 
 int main(){
+  /*
+    Syncronization with I/O of printf/scanf with cout/cin is false
+    Using these lines be ware of using just one of them, cin/cout OR scanf/printf. NOT BOTH.
+  */
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
   /* 5 nodes starting from node '0' bidirectional*/
   Dijkstra<int,int> dij = Dijkstra<int,int>(5,0,true);

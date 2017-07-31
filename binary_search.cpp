@@ -1,17 +1,17 @@
 #include <bits/stdc++.h>
-#define rep(i,n) for(int i = 0; i < n; ++i)
+#define iterations(i,n) for(int i = 0; i < n; ++i)
 #define INF 1e8
 
 using namespace std;
 
 template<class type> class BinarySearch
 {
-  type left, right, comparator;
+  type left, right;
   vector<type> container;
 
   /* THIS FUNCTION MUST BE MODIFIED DEPENDING OF THE PROBLEM */
-  bool search_at_left(type middle){
-    return comparator <= this->container[middle];
+  bool search_at_left(type middle, type searched_number){
+    return searched_number <= this->container[middle];
   }
 
   public:
@@ -20,61 +20,58 @@ template<class type> class BinarySearch
     BinarySearch(type left,type right){
       this->left = left;
       this->right = right;
-      rep(i,left){
+      iterations(i,left){
         this->container.push_back(INF);
       }
     }
-    BinarySearch(vector<type> container, type left, type right,type comparator){
+    BinarySearch(vector<type> container, type left, type right){
       this->left = left;
       this->right = right;
       this->container = container;
-      this->comparator = comparator;
     }
     /* END OF CONTRUCTORS */
 
     /* FUNCTIONS */
     void set_container(vector<type> container){
-      this.container = container;
+      this->container = container;
     }
 
     void add_to_container(type element){
       this->container.push_back(element);
     }
 
-    void set_comparator(type comparator){
-      this->comparator = comparator;
-    }
-
     /* END OF FUNCTIONS */
 
     /* BINARY SEARCH FUNCTIONS */
-    type searchInt(){
-      if (comparator < left || comparator > right) {
-        return INF;
-      }
+    type searchInt(type from, type to, type searched_number){
+      left = from; right = to;
       while (left < right) {
         type middle = left + right >> 1;
-        std::cout << "l : " << left << " r : " << right << " m : "<< middle << '\n';
-        if(search_at_left(middle))
+        std::cout << "left : " << left << " right : " << right << " middle : "<< middle << '\n';
+        if(search_at_left(middle, searched_number))
           right = middle;
         else
           left = middle + 1;
       }
-      return right; // middle is out of context
+      if(this->container[right] == searched_number)
+        return right; // middle is out of context
+      else
+        return INF;
     }
 
-    type searchDouble(){
-      if (comparator < left || comparator > right) {
-        return INF;
-      }
-      rep(i,50){
+    type searchDouble(type from, type to, type searched_number){
+      left = from; right = to;
+      iterations(i,50){
         type middle = (left + right) * .5;
-        if (search_at_left(middle))
+        if (search_at_left(middle, searched_number))
           right = middle;
         else
           left = middle;
       }
-      return right; // middle is out of context
+      if(this->container[right] == searched_number)
+        return right; // middle is out of context
+      else
+        return INF;
     }
     /* END OF BINARY SEARCH FUNCTIONS */
 };
@@ -87,13 +84,18 @@ int main() {
   ios::sync_with_stdio(0);
   cin.tie(0);
 
-  int i = 1, j = 5;
-  BinarySearch<int> bs = BinarySearch<int>(i,j);
-  for(i; i <= j; i++){
-    bs.add_to_container(i);
+  int n;
+  cin >> n;
+  BinarySearch<int> bs = BinarySearch<int>(0,n);
+  int lecture;
+  iterations(i,n){
+    cin >> lecture;
+    bs.add_to_container(lecture);
   }
-  bs.set_comparator(INF);
-  int ans = bs.searchInt();
-  cout << "ans : " << ans << '\n';
+  cout << '\n';
+  while (cin >> lecture) {
+    int ans = bs.searchInt(0,n-1,lecture);
+    cout << "answer : " << ans << '\n';
+  }
   return 0;
 }
