@@ -1,12 +1,12 @@
 INCLUSIVE "OR" FOR PROBABILITIES ALGORITHM  
-    The most basic unit that we know of the inclusive "or" is P(A U B) = P(A) + P(B) - P(A)*P(B). In order to solve this in an  
+    The most basic unit that we know of the inclusive "or" is P(A U B) = P(A) + P(B) - P(A)\*P(B). In order to solve this in an  
   algorithm, Dynamic Programming (DP) can be used. The border cases are:  
       - P(0) = 0  
       - P(A) = a  
-      - P(A U B) = a + b - a*b  
+      - P(A U B) = a + b - a\*b  
     Any other case would be like:  
-      - P(A U ...) = a + ... - a*(...)  
-    Where "..." is the function of more than 1 probabilities events (ie. B U C, B U C U D, etc.)  
+      - P(A U ...) = a + (...) - a\*(...)  
+    Where "..." is the function result of more than 1 probabilities events (ie. B U C, B U C U D, etc.)  
     Having said that, we could define the DP like:  
     
 ```
@@ -28,7 +28,7 @@ function inclusiveOrProbability(Array probabilities):
 
 
 ECVLUSIVE "OR" FOR PROBABILITIES ALGORITHM  
-  This one is not hard at all, two events that not overlap so the reultant value of the sum is equal to the union of the probabilities.  
+  This one is not hard at all, two events that are not overlaped so the resultant value of the sum is equal to the union of the probabilities.  
     -P(A U B) = P(A) + P(B)  
       
 ```
